@@ -10,7 +10,7 @@ import {
 
 import './sign-up-form.styles.scss';
 
-const defaultFormField = {
+const defaultFormFields = {
   displayName: '',
   email: '',
   password: '',
@@ -18,12 +18,12 @@ const defaultFormField = {
 };
 
 const SignUpForm = () => {
-  const [formFields, setFormFields] = useState(defaultFormField);
+  const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } =
     formFields;
 
   const resetFormFields = () => {
-    setFormFields(defaultFormField);
+    setFormFields(defaultFormFields);
   };
 
   const handleSubmit = async (event) => {
@@ -35,7 +35,7 @@ const SignUpForm = () => {
     }
 
     try {
-      const user = await createAuthUserWithEmailAndPassword(
+      const { user } = await createAuthUserWithEmailAndPassword(
         email,
         password
       );
@@ -46,6 +46,7 @@ const SignUpForm = () => {
       if (error.code === 'auth/email-already-in-use') {
         alert('Cannot create user, email already in use');
       } else {
+        console.log('user creation encountered an error', error);
       }
     }
   };
@@ -58,8 +59,8 @@ const SignUpForm = () => {
 
   return (
     <div className="sign-up-container">
-      <h2>Dont have an account?</h2>
-      <span>Sign up with email and password</span>
+      <h2>Don't have an account?</h2>
+      <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
           label="Display Name"
