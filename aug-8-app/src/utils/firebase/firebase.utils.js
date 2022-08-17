@@ -14,6 +14,8 @@ import {
   doc,
   getDoc,
   setDoc,
+  collection,
+  writeBatch
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -41,6 +43,11 @@ export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
 export const db = getFirestore();
+
+export  const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+}
 
 export const createUserDocumentFromAuth = async (
   userAuth,
